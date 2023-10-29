@@ -25,12 +25,10 @@ public class PetDogServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserAnswer.setPetDogAcceptance(Acceptance.valueOf(req.getParameter("petDogAcceptance")));
 
-        String forwardPath = "";
         switch (UserAnswer.getPetDogAcceptance()) {
-            case ACCEPT -> forwardPath = "win";
-            case NOT_ACCEPT -> forwardPath = "dont-pet-dog-lost";
+            case ACCEPT -> resp.sendRedirect("win");
+            case NOT_ACCEPT -> req.getRequestDispatcher(JspHelper.getPath("dont-pet-dog-lost")).forward(req, resp);
         }
-        req.getRequestDispatcher(JspHelper.getPath(forwardPath)).forward(req, resp);
     }
 
 }

@@ -1,16 +1,19 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <title>Одинокий песик</title>
-</head>
+<%@include file="header.jsp"%>
 <body>
-<h2>
+<%@include file="name-panel.jsp"%>
+<%@include file="counters-panel.jsp" %>
+<div class="content">
+    <img src="images/dirty-dog.jpg" alt="Собака кушает">
+    <div class="text-form-container">
+<h4>
     Собачка радостно запрыгнула к тебе на руки.
     <br>
     Теперь ты полностью в грязи.
     Сбросить ее с рук?
-</h2>
+</h4>
 <form action="${pageContext.request.contextPath}/jumping-dog" method="post">
     <c:forEach var="dogOnArmsAcceptance" items="${requestScope.dogOnArmsAcceptance}">
         <label>
@@ -21,6 +24,8 @@
     <br>
     <button type="submit">OK</button>
 </form>
+    </div>
+</div>
 </body>
 </html>
 

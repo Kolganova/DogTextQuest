@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class UserAnswer {
+
     @Getter
     @Setter
     private static ChallengeAcceptance acceptance;

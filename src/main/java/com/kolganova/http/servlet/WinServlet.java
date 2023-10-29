@@ -10,21 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/greeting")
-public class GreetingServlet extends HttpServlet {
+@WebServlet("/win")
+public class WinServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User.setTries(0);
-        User.setWins(0);
-        req.getRequestDispatcher(JspHelper.getPath("greeting")).forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User.setName(req.getParameter("name"));
-        req.getSession().setAttribute("name", User.getName());
-        resp.sendRedirect("/start");
+        User.setWins(User.getWins() + 1);
+        req.getSession().setAttribute("winsCounter", User.getWins());
+        req.getRequestDispatcher(JspHelper.getPath("win")).forward(req, resp);
     }
 
 }

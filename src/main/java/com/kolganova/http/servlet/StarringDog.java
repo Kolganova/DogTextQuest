@@ -14,4 +14,5 @@ public class StarringDog extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         req.getRequestDispatcher(JspHelper.getPath("starring-dog"));
     }
+
 }

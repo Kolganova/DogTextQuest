@@ -1,7 +1,6 @@
 package com.kolganova.http.servlet;
 
 import com.kolganova.http.entity.User;
-import com.kolganova.http.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,21 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/greeting")
-public class GreetingServlet extends HttpServlet {
-
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().invalidate();
         User.setTries(0);
-        User.setWins(0);
-        req.getRequestDispatcher(JspHelper.getPath("greeting")).forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User.setName(req.getParameter("name"));
-        req.getSession().setAttribute("name", User.getName());
-        resp.sendRedirect("/start");
+        resp.sendRedirect("/greeting");
     }
 
 }

@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: justify;
+    margin: 10px;
+    background-color: #F5F5DC;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+}
+
+img {
+    max-width: 30%;
+    height: auto;
+    margin-right: 20px;
+}
+
+.text-link-container {
+    flex-grow: 1;
+}
+
+h2 {
+    margin-top: 10px;
+}
+
+h4 {
+    margin-top: 10px;
+}
+
+form {
+    margin-top: 10px;
+}
+
+label {
+    margin: 5px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    display: block;
+    margin-top: 10px;
+}
