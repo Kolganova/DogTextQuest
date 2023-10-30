@@ -18,7 +18,7 @@
 <form action="${pageContext.request.contextPath}/pet-dog" method="post">
     <c:forEach var="petDogAcceptance" items="${requestScope.petDogAcceptance}">
         <label>
-            <input type="radio" name="petDogAcceptance" value="${petDogAcceptance}">
+            <input type="radio" name="petDogAcceptance" value="${petDogAcceptance}" required>
         </label> ${petDogAcceptance.russianTranslation}
         <br>
     </c:forEach>

@@ -12,7 +12,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/jumping-dog")
+import static com.kolganova.http.util.UrlPath.*;
+
+@WebServlet(JUMPING_DOG)
 public class JumpingDogServlet extends HttpServlet {
 
     @Override
@@ -27,8 +29,8 @@ public class JumpingDogServlet extends HttpServlet {
 
         String redirectPath = "";
         switch (UserAnswer.getDogOnArmsAcceptance()) {
-            case ACCEPT -> redirectPath = "/lonely-lost";
-            case NOT_ACCEPT -> redirectPath = "/give-food";
+            case ACCEPT -> redirectPath = LONELY_LOST;
+            case NOT_ACCEPT -> redirectPath = GIVE_FOOD;
         }
         resp.sendRedirect(redirectPath);
     }

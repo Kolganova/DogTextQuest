@@ -9,11 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/multiply-meal-lost")
-public class MultiplyMealLost extends HttpServlet {
+import static com.kolganova.http.util.UrlPath.LONELY_LOST;
+
+@WebServlet(LONELY_LOST)
+public class LonelyLostServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(JspHelper.getPath("multiply-meal-lost")).forward(req, resp);
+        req.getRequestDispatcher(JspHelper.getPath("lonely-lost")).forward(req, resp);
     }
 }

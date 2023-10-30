@@ -12,7 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/pet-dog")
+import static com.kolganova.http.util.UrlPath.PET_DOG;
+import static com.kolganova.http.util.UrlPath.WIN;
+
+@WebServlet(PET_DOG)
 public class PetDogServlet extends HttpServlet {
 
     @Override
@@ -26,7 +29,7 @@ public class PetDogServlet extends HttpServlet {
         UserAnswer.setPetDogAcceptance(Acceptance.valueOf(req.getParameter("petDogAcceptance")));
 
         switch (UserAnswer.getPetDogAcceptance()) {
-            case ACCEPT -> resp.sendRedirect("win");
+            case ACCEPT -> resp.sendRedirect(WIN);
             case NOT_ACCEPT -> req.getRequestDispatcher(JspHelper.getPath("dont-pet-dog-lost")).forward(req, resp);
         }
     }

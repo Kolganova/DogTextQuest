@@ -10,7 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/greeting")
+import static com.kolganova.http.util.UrlPath.GREETING;
+import static com.kolganova.http.util.UrlPath.START;
+
+@WebServlet(GREETING)
 public class GreetingServlet extends HttpServlet {
 
     @Override
@@ -24,7 +27,7 @@ public class GreetingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         User.setName(req.getParameter("name"));
         req.getSession().setAttribute("name", User.getName());
-        resp.sendRedirect("/start");
+        resp.sendRedirect(START);
     }
 
 }

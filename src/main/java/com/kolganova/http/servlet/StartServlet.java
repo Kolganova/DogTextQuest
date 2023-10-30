@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/start")
+import static com.kolganova.http.util.UrlPath.*;
+
+@WebServlet(START)
 public class StartServlet extends HttpServlet {
 
     @Override
@@ -32,8 +34,8 @@ public class StartServlet extends HttpServlet {
 
         String redirectPath = "";
         switch (UserAnswer.getAcceptance()) {
-            case ACCEPT -> redirectPath = "/jumping-dog";
-            case LET_DOG_DECIDE -> redirectPath = "/keep-looking";
+            case ACCEPT -> redirectPath = JUMPING_DOG;
+            case LET_DOG_DECIDE -> redirectPath = KEEP_LOOKING;
             case NOT_ACCEPT -> req.getRequestDispatcher(JspHelper.getPath("second-thoughts")).forward(req, resp);
         }
         resp.sendRedirect(redirectPath);

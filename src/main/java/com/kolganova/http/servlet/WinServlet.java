@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/win")
+import static com.kolganova.http.util.UrlPath.WIN;
+
+@WebServlet(WIN)
 public class WinServlet extends HttpServlet {
 
     @Override

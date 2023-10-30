@@ -3,6 +3,7 @@ package com.kolganova.http.servlet;
 import com.kolganova.http.entity.Acceptance;
 import com.kolganova.http.entity.UserAnswer;
 import com.kolganova.http.util.JspHelper;
+import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/give-food")
+import static com.kolganova.http.util.UrlPath.GIVE_FOOD;
+import static com.kolganova.http.util.UrlPath.PET_DOG;
+
+@WebServlet(GIVE_FOOD)
 public class GiveFoodServlet extends HttpServlet {
 
     @Override
@@ -27,7 +31,7 @@ public class GiveFoodServlet extends HttpServlet {
 
         switch (UserAnswer.getGiveFoodAcceptance()) {
             case ACCEPT -> req.getRequestDispatcher(JspHelper.getPath("let-dog-eat")).forward(req, resp);
-            case NOT_ACCEPT -> resp.sendRedirect("/pet-dog");
+            case NOT_ACCEPT -> resp.sendRedirect(PET_DOG);
         }
     }
 }

@@ -12,12 +12,15 @@
             <br>
             Так и хочется забрать ее к себе домой, ну хотя бы для того, чтобы отогреть бедняжку.
             <br>
-            Подойдешь к ней поближе?</h4>
+        </h4>
+        <p>
+            Подойдешь к ней поближе?
+        </p>
         <form action="${pageContext.request.contextPath}/start" method="post">
             <c:forEach var="challengeAcceptance" items="${requestScope.challengeAcceptance}">
                 <label>
                     <input type="radio" name="challengeAcceptance"
-                           value="${challengeAcceptance}">
+                           value="${challengeAcceptance}" required>
                 </label> ${challengeAcceptance.russianTranslation}
                 <br>
             </c:forEach>

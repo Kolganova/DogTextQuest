@@ -12,7 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/keep-looking")
+import static com.kolganova.http.util.UrlPath.KEEP_LOOKING;
+import static com.kolganova.http.util.UrlPath.MULTIPLY_MEAL_LOST;
+
+@WebServlet(value = KEEP_LOOKING)
 public class KeepLookingServlet extends HttpServlet {
 
     @Override
@@ -27,7 +30,7 @@ public class KeepLookingServlet extends HttpServlet {
 
         switch (UserAnswer.getKeepLookingAcceptance()) {
             case ACCEPT -> req.getRequestDispatcher(JspHelper.getPath("single-meal-lost")).forward(req, resp);
-            case NOT_ACCEPT -> resp.sendRedirect("/multiply-meal-lost");
+            case NOT_ACCEPT -> resp.sendRedirect(MULTIPLY_MEAL_LOST);
         }
     }
 
