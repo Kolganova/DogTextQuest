@@ -20,10 +20,10 @@ public class StartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User.setTries(User.getTries() + 1);
+        User.getInstance().setTries(User.getInstance().getTries() + 1);
         req.setAttribute("challengeAcceptance", List.of(ChallengeAcceptance.values()));
-        req.getSession().setAttribute("counter", User.getTries());
-        req.getSession().setAttribute("winsCounter", User.getWins());
+        req.getSession().setAttribute("counter", User.getInstance().getTries());
+        req.getSession().setAttribute("winsCounter", User.getInstance().getWins());
 
         req.getRequestDispatcher(JspHelper.getPath("start")).forward(req, resp);
     }

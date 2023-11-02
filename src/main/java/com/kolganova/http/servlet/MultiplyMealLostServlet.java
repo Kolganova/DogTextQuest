@@ -1,7 +1,6 @@
 package com.kolganova.http.servlet;
 
 import com.kolganova.http.util.JspHelper;
-import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,7 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(UrlPath.MULTIPLY_MEAL_LOST)
+import static com.kolganova.http.util.UrlPath.MULTIPLY_MEAL_LOST;
+
+@WebServlet(MULTIPLY_MEAL_LOST)
 public class MultiplyMealLostServlet extends HttpServlet {
 
     @Override

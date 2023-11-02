@@ -18,15 +18,15 @@ public class GreetingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User.setTries(0);
-        User.setWins(0);
+        User.getInstance().setTries(0);
+        User.getInstance().setWins(0);
         req.getRequestDispatcher(JspHelper.getPath("greeting")).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User.setName(req.getParameter("name"));
-        req.getSession().setAttribute("name", User.getName());
+        User.getInstance().setName(req.getParameter("name"));
+        req.getSession().setAttribute("name", User.getInstance().getName());
         resp.sendRedirect(START);
     }
 

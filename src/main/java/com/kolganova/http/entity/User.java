@@ -3,16 +3,20 @@ package com.kolganova.http.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 public class User {
 
-    @Getter
+    static User INSTANCE = new User();
+
     @Setter
-    private static String name;
-    @Getter
+    private String name;
     @Setter
-    private static int tries;
-    @Getter
+    private int tries;
     @Setter
-    private static int wins;
+    private int wins;
+
+    public static User getInstance() {
+        return INSTANCE;
+    }
 
 }
