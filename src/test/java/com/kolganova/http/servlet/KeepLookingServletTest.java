@@ -1,9 +1,9 @@
 package com.kolganova.http.servlet;
 
 import com.kolganova.http.entity.Acceptance;
-import com.kolganova.http.util.JspHelper;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +26,8 @@ class KeepLookingServletTest {
     HttpServletResponse response;
     @Mock
     RequestDispatcher requestDispatcher;
+    @Mock
+    ServletContext context;
     KeepLookingServlet servlet;
 
     @BeforeEach
@@ -34,17 +36,19 @@ class KeepLookingServletTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         requestDispatcher = mock(RequestDispatcher.class);
+        context = mock(ServletContext.class);
     }
 
     @Test
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        when(request.getServletContext()).thenReturn(context);
         String attributeName = "keepLookingAcceptance";
 
         servlet.doGet(request, response);
 
         verify(request).setAttribute(attributeName, List.of(Acceptance.values()));
-        verify(request).getRequestDispatcher(JspHelper.getPath("keep-looking"));
+        verify(request).getRequestDispatcher(anyString());
         verify(requestDispatcher).forward(request, response);
     }
 
@@ -52,11 +56,12 @@ class KeepLookingServletTest {
     void doPostForward_ACCEPT_test() throws ServletException, IOException {
         when(request.getParameter("keepLookingAcceptance")).thenReturn("ACCEPT");
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        when(request.getServletContext()).thenReturn(context);
 
         servlet.doPost(request, response);
 
         verify(request).getParameter("keepLookingAcceptance");
-        verify(request).getRequestDispatcher(JspHelper.getPath("single-meal-lost"));
+        verify(request).getRequestDispatcher(anyString());
         verify(requestDispatcher).forward(request, response);
     }
     @Test

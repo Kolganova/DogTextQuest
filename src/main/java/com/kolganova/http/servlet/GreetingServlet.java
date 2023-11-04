@@ -18,6 +18,7 @@ public class GreetingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         User.getInstance().setTries(0);
         User.getInstance().setWins(0);
         req.getRequestDispatcher(JspHelper.getPath("greeting")).forward(req, resp);

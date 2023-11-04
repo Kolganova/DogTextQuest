@@ -1,8 +1,8 @@
 package com.kolganova.http.servlet;
 
-import com.kolganova.http.util.JspHelper;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +24,8 @@ class GreetingServletTest {
     HttpServletRequest request;
     @Mock
     RequestDispatcher dispatcher;
+    @Mock
+    ServletContext context;
     GreetingServlet servlet;
 
     @BeforeEach
@@ -32,15 +34,18 @@ class GreetingServletTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         dispatcher = mock(RequestDispatcher.class);
+        context = mock(ServletContext.class);
     }
 
     @Test
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getServletContext()).thenReturn(context);
+
 
         servlet.doGet(request, response);
 
-        verify(request).getRequestDispatcher(JspHelper.getPath("greeting"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 

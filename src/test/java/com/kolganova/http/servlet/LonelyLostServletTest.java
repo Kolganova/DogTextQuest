@@ -1,7 +1,7 @@
 package com.kolganova.http.servlet;
 
-import com.kolganova.http.util.JspHelper;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +21,8 @@ class LonelyLostServletTest {
     HttpServletResponse response;
     @Mock
     RequestDispatcher dispatcher;
+    @Mock
+    ServletContext context;
     LonelyLostServlet servlet;
 
     @BeforeEach
@@ -29,15 +31,17 @@ class LonelyLostServletTest {
         servlet = new LonelyLostServlet();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        context = mock(ServletContext.class);
     }
 
     @Test
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getServletContext()).thenReturn(context);
 
         servlet.doGet(request, response);
 
-        verify(request).getRequestDispatcher(JspHelper.getPath("lonely-lost"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 

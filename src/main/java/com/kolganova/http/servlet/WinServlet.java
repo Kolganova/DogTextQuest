@@ -17,6 +17,7 @@ public class WinServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         User.getInstance().setWins(User.getInstance().getWins() + 1);
         req.getSession().setAttribute("winsCounter", User.getInstance().getWins());
         req.getRequestDispatcher(JspHelper.getPath("win")).forward(req, resp);

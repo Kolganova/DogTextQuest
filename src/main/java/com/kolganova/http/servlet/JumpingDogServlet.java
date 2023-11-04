@@ -19,6 +19,7 @@ public class JumpingDogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         req.setAttribute("dogOnArmsAcceptance", List.of(Acceptance.values()));
         req.getRequestDispatcher(JspHelper.getPath("jumping-dog")).forward(req, resp);
     }

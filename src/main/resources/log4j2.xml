@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+    <Appenders>
+        <RollingFile name="LogToRollingFile" fileName="logs/DogTextQuest.log"
+                     filePattern="logs/DogTextQuest.%d{yyyy-MM-dd-mm}.log" ignoreException="false">
+            <PatternLayout pattern="%d %-5p %-10c: %m%n"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs">
+                    <IfFileName glob="DogTextGuest.*.log"/>
+                    <IfLasModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="ALL">
+            <AppenderRef ref="LogToRollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

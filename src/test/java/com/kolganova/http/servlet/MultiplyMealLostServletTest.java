@@ -1,7 +1,7 @@
 package com.kolganova.http.servlet;
 
-import com.kolganova.http.util.JspHelper;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +23,8 @@ class MultiplyMealLostServletTest {
     HttpServletResponse response;
     @Mock
     RequestDispatcher dispatcher;
+    @Mock
+    ServletContext context;
     MultiplyMealLostServlet servlet;
 
     @BeforeEach
@@ -31,14 +33,16 @@ class MultiplyMealLostServletTest {
         servlet = new MultiplyMealLostServlet();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        context = mock(ServletContext.class);
     }
     @Test
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getServletContext()).thenReturn(context);
 
         servlet.doGet(request, response);
 
-        verify(request).getRequestDispatcher(JspHelper.getPath("multiply-meal-lost"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 }

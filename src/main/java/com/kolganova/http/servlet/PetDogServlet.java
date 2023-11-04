@@ -20,12 +20,14 @@ public class PetDogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         req.setAttribute("petDogAcceptance", List.of(Acceptance.values()));
         req.getRequestDispatcher(JspHelper.getPath("pet-dog")).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         UserAnswer.setPetDogAcceptance(Acceptance.valueOf(req.getParameter("petDogAcceptance")));
 
         switch (UserAnswer.getPetDogAcceptance()) {

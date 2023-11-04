@@ -20,6 +20,7 @@ public class StartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         User.getInstance().setTries(User.getInstance().getTries() + 1);
         req.setAttribute("challengeAcceptance", List.of(ChallengeAcceptance.values()));
         req.getSession().setAttribute("counter", User.getInstance().getTries());
@@ -30,6 +31,7 @@ public class StartServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        JspHelper.setRequest(req);
         UserAnswer.setAcceptance(ChallengeAcceptance.valueOf(req.getParameter("challengeAcceptance")));
 
         String redirectPath = "";

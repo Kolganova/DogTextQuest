@@ -3,7 +3,6 @@ package com.kolganova.http.servlet;
 import com.kolganova.http.entity.Acceptance;
 import com.kolganova.http.entity.UserAnswer;
 import com.kolganova.http.util.JspHelper;
-import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,12 +20,14 @@ public class GiveFoodServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         req.setAttribute("giveFoodAcceptance", List.of(Acceptance.values()));
         req.getRequestDispatcher(JspHelper.getPath("give-food")).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         UserAnswer.setGiveFoodAcceptance(Acceptance.valueOf(req.getParameter("giveFoodAcceptance")));
 
         switch (UserAnswer.getGiveFoodAcceptance()) {

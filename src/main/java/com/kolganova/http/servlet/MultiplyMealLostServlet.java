@@ -16,6 +16,7 @@ public class MultiplyMealLostServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JspHelper.setRequest(req);
         req.getRequestDispatcher(JspHelper.getPath("multiply-meal-lost")).forward(req, resp);
     }
 }

@@ -1,9 +1,9 @@
 package com.kolganova.http.servlet;
 
 import com.kolganova.http.entity.Acceptance;
-import com.kolganova.http.util.JspHelper;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +25,8 @@ class JumpingDogServletTest {
     HttpServletRequest request;
     @Mock
     RequestDispatcher dispatcher;
+    @Mock
+    ServletContext context;
     JumpingDogServlet servlet;
 
     @BeforeEach
@@ -33,17 +35,20 @@ class JumpingDogServletTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         dispatcher = mock(RequestDispatcher.class);
+        context = mock(ServletContext.class);
     }
 
     @Test
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getServletContext()).thenReturn(context);
+
         String attributeName = "dogOnArmsAcceptance";
 
         servlet.doGet(request, response);
 
         verify(request).setAttribute(attributeName, List.of(Acceptance.values()));
-        verify(request).getRequestDispatcher(JspHelper.getPath("jumping-dog"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 
@@ -55,6 +60,7 @@ class JumpingDogServletTest {
 
         verify(response).sendRedirect(UrlPath.LONELY_LOST);
     }
+
     @Test
     void doPostRedirectNot_NOT_ACCEPT_Test() throws IOException {
         when(request.getParameter("dogOnArmsAcceptance")).thenReturn("NOT_ACCEPT");

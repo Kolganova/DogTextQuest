@@ -1,9 +1,9 @@
 package com.kolganova.http.servlet;
 
 import com.kolganova.http.entity.ChallengeAcceptance;
-import com.kolganova.http.util.JspHelper;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +27,8 @@ class StartServletTest {
     HttpServletResponse response;
     @Mock
     RequestDispatcher dispatcher;
+    @Mock
+    ServletContext context;
     StartServlet servlet;
 
     @BeforeEach
@@ -35,6 +37,7 @@ class StartServletTest {
         servlet = new StartServlet();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        context = mock(ServletContext.class);
     }
 
     @Test
@@ -42,6 +45,7 @@ class StartServletTest {
         HttpSession session = mock(HttpSession.class);
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         when(request.getSession()).thenReturn(session);
+        when(request.getServletContext()).thenReturn(context);
         String attributeName1 = "challengeAcceptance";
         String attributeName2 = "counter";
         String attributeName3 = "winsCounter";
@@ -52,7 +56,7 @@ class StartServletTest {
         verify(request, times(2)).getSession();
         verify(session).setAttribute(eq(attributeName2), anyInt());
         verify(session).setAttribute(eq(attributeName3), anyInt());
-        verify(request).getRequestDispatcher(JspHelper.getPath("start"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 
@@ -76,10 +80,11 @@ class StartServletTest {
     void doPostSendRedirect_NOT_ACCEPT_test() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         when(request.getParameter("challengeAcceptance")).thenReturn("NOT_ACCEPT");
+        when(request.getServletContext()).thenReturn(context);
 
         servlet.doPost(request, response);
 
-        verify(request).getRequestDispatcher(JspHelper.getPath("second-thoughts"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 

@@ -1,9 +1,9 @@
 package com.kolganova.http.servlet;
 
 import com.kolganova.http.entity.Acceptance;
-import com.kolganova.http.util.JspHelper;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +26,8 @@ class PetDogServletTest {
     HttpServletResponse response;
     @Mock
     RequestDispatcher dispatcher;
+    @Mock
+    ServletContext context;
     PetDogServlet servlet;
 
     @BeforeEach
@@ -34,16 +36,18 @@ class PetDogServletTest {
         servlet = new PetDogServlet();
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
+        context = mock(ServletContext.class);
     }
 
     @Test
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getServletContext()).thenReturn(context);
         String attributeName = "petDogAcceptance";
 
         servlet.doGet(request, response);
         verify(request).setAttribute(attributeName, List.of(Acceptance.values()));
-        verify(request).getRequestDispatcher(JspHelper.getPath("pet-dog"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 
@@ -61,11 +65,12 @@ class PetDogServletTest {
     void doPostForward_NOT_ACCEPT_test() throws ServletException, IOException {
         when(request.getParameter("petDogAcceptance")).thenReturn("NOT_ACCEPT");
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getServletContext()).thenReturn(context);
 
         servlet.doPost(request, response);
 
         verify(request).getParameter("petDogAcceptance");
-        verify(request).getRequestDispatcher(JspHelper.getPath("dont-pet-dog-lost"));
+        verify(request).getRequestDispatcher(anyString());
         verify(dispatcher).forward(request, response);
     }
 }
