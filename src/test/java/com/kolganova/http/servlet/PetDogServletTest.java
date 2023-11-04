@@ -58,7 +58,7 @@ class PetDogServletTest {
         servlet.doPost(request, response);
 
         verify(request).getParameter("petDogAcceptance");
-        verify(response).sendRedirect(UrlPath.WIN);
+        verify(response).sendRedirect(UrlPath.WIN_URL);
     }
 
     @Test

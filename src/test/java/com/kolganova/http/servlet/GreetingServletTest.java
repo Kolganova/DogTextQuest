@@ -59,7 +59,7 @@ class GreetingServletTest {
 
         verify(request).getSession();
         verify(session).setAttribute(eq(attributeName), isNull());
-        verify(response).sendRedirect(UrlPath.START);
+        verify(response).sendRedirect(UrlPath.START_URL);
     }
 
 }

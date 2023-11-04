@@ -58,7 +58,7 @@ class JumpingDogServletTest {
 
         servlet.doPost(request, response);
 
-        verify(response).sendRedirect(UrlPath.LONELY_LOST);
+        verify(response).sendRedirect(UrlPath.LONELY_LOST_URL);
     }
 
     @Test
@@ -67,7 +67,7 @@ class JumpingDogServletTest {
 
         servlet.doPost(request, response);
 
-        verify(response).sendRedirect(UrlPath.GIVE_FOOD);
+        verify(response).sendRedirect(UrlPath.GIVE_FOOD_URL);
     }
 
 }

@@ -71,7 +71,7 @@ class KeepLookingServletTest {
         servlet.doPost(request, response);
 
         verify(request).getParameter("keepLookingAcceptance");
-        verify(response).sendRedirect(UrlPath.MULTIPLY_MEAL_LOST);
+        verify(response).sendRedirect(UrlPath.MULTIPLY_MEAL_LOST_URL);
     }
 
 }

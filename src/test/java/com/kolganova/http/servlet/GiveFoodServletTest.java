@@ -59,7 +59,7 @@ public class GiveFoodServletTest {
         servlet.doPost(request, response);
 
         verify(request).getParameter("giveFoodAcceptance");
-        verify(response).sendRedirect(UrlPath.PET_DOG);
+        verify(response).sendRedirect(UrlPath.PET_DOG_URL);
     }
 
     @Test

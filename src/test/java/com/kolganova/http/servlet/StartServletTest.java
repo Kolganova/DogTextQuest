@@ -66,7 +66,7 @@ class StartServletTest {
 
         servlet.doPost(request, response);
 
-        verify(response).sendRedirect(UrlPath.JUMPING_DOG);
+        verify(response).sendRedirect(UrlPath.JUMPING_DOG_URL);
     }
     @Test
     void doPostSendRedirect_LET_DOG_DECIDE_test() throws ServletException, IOException {
@@ -74,7 +74,7 @@ class StartServletTest {
 
         servlet.doPost(request, response);
 
-        verify(response).sendRedirect(UrlPath.KEEP_LOOKING);
+        verify(response).sendRedirect(UrlPath.KEEP_LOOKING_URL);
     }
     @Test
     void doPostSendRedirect_NOT_ACCEPT_test() throws ServletException, IOException {

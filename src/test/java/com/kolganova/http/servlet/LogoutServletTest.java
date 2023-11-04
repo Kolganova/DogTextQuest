@@ -36,7 +36,7 @@ class LogoutServletTest {
 
         verify(request).getSession();
         verify(session).invalidate();
-        verify(response).sendRedirect(UrlPath.GREETING);
+        verify(response).sendRedirect(UrlPath.GREETING_URL);
     }
 
 }
