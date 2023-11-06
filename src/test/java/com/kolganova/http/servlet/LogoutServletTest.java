@@ -3,7 +3,6 @@ package com.kolganova.http.servlet;
 import com.kolganova.http.BaseServletTest;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +18,6 @@ class LogoutServletTest extends BaseServletTest {
     @Test
     @DisplayName("doGet success sendRedirect AND session invalidation")
     void doGetTest() throws IOException, ServletException {
-        HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
 
         servlet.doGet(request, response);

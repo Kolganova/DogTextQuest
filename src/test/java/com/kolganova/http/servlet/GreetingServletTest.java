@@ -3,7 +3,6 @@ package com.kolganova.http.servlet;
 import com.kolganova.http.BaseServletTest;
 import com.kolganova.http.util.UrlPath;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -31,7 +30,6 @@ class GreetingServletTest extends BaseServletTest {
     @Test
     @DisplayName("doPost success sendRedirect AND set name attribute")
     void doPostSendRedirectTest() throws IOException {
-        HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         String attributeName = "name";
 
