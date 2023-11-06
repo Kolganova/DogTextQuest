@@ -10,6 +10,7 @@ public class JspHelper {
 
     public static final Logger logger = LoggerFactory.getLogger(JspHelper.class);
     private static final String JSP_FORMAT = "WEB-INF/jsp/%s.jsp";
+
     @SneakyThrows
     public static String getPath(String jspName) {
         if (jspIsNotNull(jspName)) {

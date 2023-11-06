@@ -1,16 +1,12 @@
 package com.kolganova.http.servlet;
 
+import com.kolganova.http.BaseServletTest;
 import com.kolganova.http.entity.ChallengeAcceptance;
 import com.kolganova.http.util.UrlPath;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,33 +15,15 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
-class StartServletTest {
-
-    @Mock
-    HttpServletRequest request;
-    @Mock
-    HttpServletResponse response;
-    @Mock
-    RequestDispatcher dispatcher;
-    @Mock
-    ServletContext context;
+class StartServletTest extends BaseServletTest {
+    @InjectMocks
     StartServlet servlet;
 
-    @BeforeEach
-    void init() {
-        dispatcher = mock(RequestDispatcher.class);
-        servlet = new StartServlet();
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        context = mock(ServletContext.class);
-    }
-
     @Test
+    @DisplayName("doGet success forward AND set 3 attributes")
     void doGetTest() throws ServletException, IOException {
-        HttpSession session = mock(HttpSession.class);
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         when(request.getSession()).thenReturn(session);
-        when(request.getServletContext()).thenReturn(context);
         String attributeName1 = "challengeAcceptance";
         String attributeName2 = "counter";
         String attributeName3 = "winsCounter";
@@ -56,11 +34,12 @@ class StartServletTest {
         verify(request, times(2)).getSession();
         verify(session).setAttribute(eq(attributeName2), anyInt());
         verify(session).setAttribute(eq(attributeName3), anyInt());
-        verify(request).getRequestDispatcher(anyString());
+        verify(request).getRequestDispatcher("WEB-INF/jsp/start.jsp");
         verify(dispatcher).forward(request, response);
     }
 
     @Test
+    @DisplayName("doPost success sendRedirect if parameter is ACCEPT")
     void doPostSendRedirect_ACCEPT_test() throws ServletException, IOException {
         when(request.getParameter("challengeAcceptance")).thenReturn("ACCEPT");
 
@@ -69,6 +48,7 @@ class StartServletTest {
         verify(response).sendRedirect(UrlPath.JUMPING_DOG_URL);
     }
     @Test
+    @DisplayName("doPost success sendRedirect if parameter is LET_DOG_DECIDE")
     void doPostSendRedirect_LET_DOG_DECIDE_test() throws ServletException, IOException {
         when(request.getParameter("challengeAcceptance")).thenReturn("LET_DOG_DECIDE");
 
@@ -77,14 +57,14 @@ class StartServletTest {
         verify(response).sendRedirect(UrlPath.KEEP_LOOKING_URL);
     }
     @Test
+    @DisplayName("doPost success forward if parameter is NOT_ACCEPT")
     void doPostSendRedirect_NOT_ACCEPT_test() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         when(request.getParameter("challengeAcceptance")).thenReturn("NOT_ACCEPT");
-        when(request.getServletContext()).thenReturn(context);
 
         servlet.doPost(request, response);
 
-        verify(request).getRequestDispatcher(anyString());
+        verify(request).getRequestDispatcher("WEB-INF/jsp/second-thoughts.jsp");
         verify(dispatcher).forward(request, response);
     }
 

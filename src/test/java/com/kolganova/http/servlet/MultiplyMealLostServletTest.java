@@ -1,13 +1,10 @@
 package com.kolganova.http.servlet;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
+import com.kolganova.http.BaseServletTest;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 
 import java.io.IOException;
 
@@ -15,34 +12,18 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
-class MultiplyMealLostServletTest {
-
-    @Mock
-    HttpServletRequest request;
-    @Mock
-    HttpServletResponse response;
-    @Mock
-    RequestDispatcher dispatcher;
-    @Mock
-    ServletContext context;
+class MultiplyMealLostServletTest extends BaseServletTest {
+    @InjectMocks
     MultiplyMealLostServlet servlet;
 
-    @BeforeEach
-    void init() {
-        dispatcher = mock(RequestDispatcher.class);
-        servlet = new MultiplyMealLostServlet();
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        context = mock(ServletContext.class);
-    }
     @Test
+    @DisplayName("doGet success forward")
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
-        when(request.getServletContext()).thenReturn(context);
 
         servlet.doGet(request, response);
 
-        verify(request).getRequestDispatcher(anyString());
+        verify(request).getRequestDispatcher("WEB-INF/jsp/multiply-meal-lost.jsp");
         verify(dispatcher).forward(request, response);
     }
 }

@@ -1,58 +1,38 @@
 package com.kolganova.http.servlet;
 
+import com.kolganova.http.BaseServletTest;
 import com.kolganova.http.entity.Acceptance;
 import com.kolganova.http.util.UrlPath;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 
 import java.io.IOException;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class GiveFoodServletTest {
+public class GiveFoodServletTest extends BaseServletTest {
 
-    @Mock
-    HttpServletRequest request;
-    @Mock
-    HttpServletResponse response;
-    @Mock
-    RequestDispatcher requestDispatcher;
-    @Mock
-    ServletContext context;
-    GiveFoodServlet servlet;
-
-    @BeforeEach
-    void init() {
-        servlet = new GiveFoodServlet();
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        requestDispatcher = mock(RequestDispatcher.class);
-        context = mock(ServletContext.class);
-
-    }
+    @InjectMocks
+    private GiveFoodServlet servlet;
 
     @Test
+    @DisplayName("doGet success forward AND set giveFoodAcceptance attribute")
     void doGetTest() throws ServletException, IOException {
-        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        when(request.getServletContext()).thenReturn(context);
-
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
 
         String attributeName = "giveFoodAcceptance";
 
         servlet.doGet(request, response);
         verify(request).setAttribute(attributeName, List.of(Acceptance.values()));
-        verify(request).getRequestDispatcher(anyString());
-        verify(requestDispatcher).forward(request, response);
+        verify(request).getRequestDispatcher("WEB-INF/jsp/give-food.jsp");
+        verify(dispatcher).forward(request, response);
     }
 
     @Test
+    @DisplayName("doPost success sendRedirect if parameter is NOT_ACCEPT")
     void doPostSendRedirect_NOT_ACCEPT_test() throws ServletException, IOException {
         when(request.getParameter("giveFoodAcceptance")).thenReturn("NOT_ACCEPT");
 
@@ -63,16 +43,16 @@ public class GiveFoodServletTest {
     }
 
     @Test
+    @DisplayName("doPost success forward if parameter is ACCEPT")
     void doPostForward_ACCEPT_test() throws ServletException, IOException {
         when(request.getParameter("giveFoodAcceptance")).thenReturn("ACCEPT");
-        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        when(request.getServletContext()).thenReturn(context);
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
 
         servlet.doPost(request, response);
 
         verify(request).getParameter("giveFoodAcceptance");
-        verify(request).getRequestDispatcher(anyString());
-        verify(requestDispatcher).forward(request, response);
+        verify(request).getRequestDispatcher("WEB-INF/jsp/let-dog-eat.jsp");
+        verify(dispatcher).forward(request, response);
     }
 
 }

@@ -1,55 +1,35 @@
 package com.kolganova.http.servlet;
 
+import com.kolganova.http.BaseServletTest;
 import com.kolganova.http.util.UrlPath;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class GreetingServletTest {
-
-    @Mock
-    HttpServletResponse response;
-    @Mock
-    HttpServletRequest request;
-    @Mock
-    RequestDispatcher dispatcher;
-    @Mock
-    ServletContext context;
-    GreetingServlet servlet;
-
-    @BeforeEach
-    void init() {
-        servlet = new GreetingServlet();
-        request = mock(HttpServletRequest.class);
-        response = mock(HttpServletResponse.class);
-        dispatcher = mock(RequestDispatcher.class);
-        context = mock(ServletContext.class);
-    }
+class GreetingServletTest extends BaseServletTest {
+    @InjectMocks
+    private GreetingServlet servlet;
 
     @Test
+    @DisplayName("doGet success forward")
     void doGetTest() throws ServletException, IOException {
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
-        when(request.getServletContext()).thenReturn(context);
-
 
         servlet.doGet(request, response);
 
-        verify(request).getRequestDispatcher(anyString());
+        verify(request).getRequestDispatcher("WEB-INF/jsp/greeting.jsp");
         verify(dispatcher).forward(request, response);
     }
 
     @Test
+    @DisplayName("doPost success sendRedirect AND set name attribute")
     void doPostSendRedirectTest() throws IOException {
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
